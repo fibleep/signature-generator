@@ -1,5 +1,7 @@
 ---
 import Layout from '../layouts/Layout.astro';
+import ProfilePicSelector from '../components/ProfilePicSelector';
+import DvdEasterEgg from '../components/DvdEasterEgg';
 
 // Define the purple color from the template
 const purpleColor = 'rgb(127, 51, 199)';
@@ -7,6 +9,26 @@ const blackColor = 'rgb(0, 0, 0)';
 const defaultTextColor = 'rgb(0, 0, 0)'; // As seen in template links/text
 const hubspotIconBase = 'https://cdn2.hubspot.net/hubfs/53/tools/email-signature-generator/icons/';
 const logoUrl = 'https://uploads-ssl.webflow.com/638782a43f80a9862648eed7/662e1b995c5cc0dae5c5815d_logo_test_2.webp'; // From template
+
+// People data for the profile selector
+const people = [
+    { name: 'Pieterjan', url: 'https://cdn.prod.website-files.com/638782a43f80a9862648eed7/67f3f8197b1c2a859e9390c3_pieterjan.png' },
+    { name: 'Samuel', url: 'https://cdn.prod.website-files.com/638782a43f80a9862648eed7/67f3f80e480953a38cfbe8d0_samuel.jpeg' },
+    { name: 'Emilie', url: 'https://cdn.prod.website-files.com/638782a43f80a9862648eed7/67f3f7fb5a5d225a3a306d39_emilie.jpeg' },
+    { name: 'Mohamed', url: 'https://cdn.prod.website-files.com/638782a43f80a9862648eed7/67f3f7d13cfdbc5a62be8404_mohammed.png' },
+    { name: 'Kato', url: 'https://cdn.prod.website-files.com/638782a43f80a9862648eed7/67f3f77fc2c9fece67100d0f_kato.jpg' },
+    { name: 'Stef-Kamil', url: 'https://cdn.prod.website-files.com/638782a43f80a9862648eed7/67f3f77f39869edde00200de_stef-kamil.jpg' },
+    { name: 'Axel', url: 'https://cdn.prod.website-files.com/638782a43f80a9862648eed7/67f3f77fd18dbe8351448984_axel.jpg' },
+    { name: 'Juliette', url: 'https://cdn.prod.website-files.com/638782a43f80a9862648eed7/67f3f77e9fdfa26b31647256_juliette.jpg' },
+    { name: 'Lucas', url: 'https://cdn.prod.website-files.com/638782a43f80a9862648eed7/67f3f77ead30ed1995679638_lucas.jpg' },
+    { name: 'Nathan', url: 'https://cdn.prod.website-files.com/638782a43f80a9862648eed7/67f3f77e5db6ba6063bdb32f_nathan.jpg' },
+    { name: 'Ryan', url: 'https://cdn.prod.website-files.com/638782a43f80a9862648eed7/67f3f77e7c9663f05b9e5aa0_ryan.jpg' },
+    { name: 'Garvit', url: 'https://cdn.prod.website-files.com/638782a43f80a9862648eed7/67f3f77efbecd2dd69bb56ea_garvit.jpg' },
+    { name: 'Tijl', url: 'https://cdn.prod.website-files.com/638782a43f80a9862648eed7/67f3f77ef8ce629b51a7b9ff_tijl.jpg' },
+    { name: 'Michiel', url: 'https://cdn.prod.website-files.com/638782a43f80a9862648eed7/67f3f77e856aa71f4aa96c66_michiel.jpg' },
+    { name: 'Arthur', url: 'https://cdn.prod.website-files.com/638782a43f80a9862648eed7/67f3f77e8e162c7268461d63_arthur.jpg' },
+    { name: 'Filip', url: 'https://cdn.prod.website-files.com/638782a43f80a9862648eed7/67f2d0e06df22c155df5f32f_Filip%20Nowak%20Profile.jpeg' }
+];
 ---
 
 <Layout title="Slush'D Signature Generator">
@@ -34,8 +56,12 @@ const logoUrl = 'https://uploads-ssl.webflow.com/638782a43f80a9862648eed7/662e1b
                 <label for="website">Website URL:</label>
                 <input type="text" id="website" value="https://www.ghentslushd.be" placeholder="Include https://" />
 
-                <label for="profilePicUrl">Profile Picture URL:</label>
-                <input type="text" id="profilePicUrl" value="" placeholder="Enter Profile Picture URL" />
+                <label for="profilePicUrl">Profile Picture:</label>
+                <div>
+                    <!-- React component for profile picture selection -->
+                    <ProfilePicSelector client:load people={people} />
+                </div>
+                <input type="hidden" id="profilePicUrl" value="" />
 
                 <label for="facebookUrl">Facebook URL:</label>
                 <input type="text" id="facebookUrl" value="https://www.facebook.com/ghentslushd" placeholder="Optional: Enter full Facebook URL" />
@@ -57,6 +83,9 @@ const logoUrl = 'https://uploads-ssl.webflow.com/638782a43f80a9862648eed7/662e1b
              <button id="show-html-button" style="margin-top: 5px;">Show/Hide HTML</button>
         </div>
     </div>
+    
+    <!-- DVD Easter Egg -->
+    <DvdEasterEgg client:load people={people} selectedImageUrl="" />
 </Layout>
 
 <style define:vars={{ purpleColor, blackColor, defaultTextColor }}>
@@ -85,15 +114,11 @@ h1, h2 {
 .form-grid label { font-weight: bold; text-align: right; }
 .form-grid input[type="text"], .form-grid input[type="email"] { width: 100%; padding: 10px; border: 1px solid #ccc; border-radius: 4px; box-sizing: border-box; }
 .preview-section { margin-top: 30px; border-top: 1px solid #eee; padding-top: 30px; }
-#copy-button, #show-html-button { display: inline-block; margin: 20px 10px 10px 0; padding: 12px 25px; color: white; border: none; border-radius: 5px; cursor: pointer; font-size: 16px; transition: background-color 0.3s ease; }
-#copy-button { background-color: #5cb85c; }
-#copy-button:hover { background-color: #4cae4c; }
+#show-html-button { display: inline-block; margin: 20px 10px 10px 0; padding: 12px 25px; color: white; border: none; border-radius: 5px; cursor: pointer; font-size: 16px; transition: background-color 0.3s ease; }
 #show-html-button { background-color: #5bc0de; }
 #show-html-button:hover { background-color: #46b8da; }
 
-#copy-status { text-align: center; margin-top: 10px; }
-
-/* Preview styles (Mimicking template for visual aid, actual copy uses inline) */
+/* Preview styles */
 .signature-container {
     border: 1px solid #ddd;
     padding: 20px;
@@ -107,309 +132,250 @@ h1, h2 {
     font-size: 12px; /* Match template base font size */
     color: var(--defaultTextColor);
 }
-/* Make preview use table layout */
-.signature-container table {
-    width: 100%;
-    border-collapse: collapse;
-    vertical-align: -webkit-baseline-middle;
-}
-.signature-container td {
-    vertical-align: middle; /* Adjusted from template */
-    padding: 0px 5px; /* Basic padding */
-}
-.signature-container .name-preview {
-    font-size: 16px;
-    font-weight: bold; /* Approximating h2 style */
-    color: var(--blackColor);
-    margin: 0;
-}
-.signature-container .title-org-preview {
-    font-size: 12px;
-    line-height: 20px;
-    color: var(--defaultTextColor);
-    margin: 0;
-}
-.signature-container .contact-link-preview {
-    color: var(--defaultTextColor);
-    font-size: 12px;
-    text-decoration: none; /* Links in preview shouldn't look like page links */
-}
-.signature-container .contact-icon-preview {
-     display: inline-block;
-     width: 13px;
-     height: 13px;
-     background-color: var(--purpleColor);
-     vertical-align: bottom;
-     margin-right: 8px; /* Space between icon and text */
-}
-.signature-container .contact-icon-preview img {
-    display: block;
-    width: 13px;
-}
-.signature-container .social-icon-preview {
-    display: inline-block;
-    padding: 0px;
-    background-color: var(--blackColor);
-    margin-left: 5px;
-}
-.signature-container .social-icon-preview img {
-    display: block;
-    width: 24px;
-}
-.signature-container .vertical-divider-preview {
-    border-left: 1px solid var(--purpleColor);
-    height: 80px; /* Approximate height */
-    display: inline-block;
-    width: 1px;
-}
-.signature-container .horizontal-divider-preview {
-    border-bottom: 1px solid var(--purpleColor);
-    height: 1px;
-    margin: 15px 0; /* Approximate spacing */
-}
-.signature-container .logo-preview {
-    max-width: 130px;
-    display: inline-block;
-}
-.signature-container .profile-pic-preview {
-     max-width: 130px; /* Match template */
-     display: block; /* Match template */
-}
-
 </style>
 
 <script define:vars={{ purpleColor, blackColor, defaultTextColor, hubspotIconBase, logoUrl }}>
     // Ensure script runs after DOM is loaded
-    // document.addEventListener('DOMContentLoaded', () => { // Not needed in Astro components <script>
-        const nameInput = document.getElementById('name');
-        const titleInput = document.getElementById('title');
-        const organizationInput = document.getElementById('organization');
-        const phoneInput = document.getElementById('phone');
-        const emailInput = document.getElementById('email');
-        const websiteInput = document.getElementById('website');
-        const profilePicUrlInput = document.getElementById('profilePicUrl');
-        const facebookUrlInput = document.getElementById('facebookUrl');
-        const linkedinUrlInput = document.getElementById('linkedinUrl');
-        const instagramUrlInput = document.getElementById('instagramUrl');
+    const nameInput = document.getElementById('name');
+    const titleInput = document.getElementById('title');
+    const organizationInput = document.getElementById('organization');
+    const phoneInput = document.getElementById('phone');
+    const emailInput = document.getElementById('email');
+    const websiteInput = document.getElementById('website');
+    const profilePicUrlInput = document.getElementById('profilePicUrl'); // Hidden input
+    const facebookUrlInput = document.getElementById('facebookUrl');
+    const linkedinUrlInput = document.getElementById('linkedinUrl');
+    const instagramUrlInput = document.getElementById('instagramUrl');
 
-        const previewContainer = document.getElementById('signature-preview');
-        const htmlOutput = document.getElementById('signature-html-output');
-        const showHtmlButton = document.getElementById('show-html-button');
+    const previewContainer = document.getElementById('signature-preview');
+    const htmlOutput = document.getElementById('signature-html-output');
+    const showHtmlButton = document.getElementById('show-html-button');
 
-        const allInputs = [nameInput, titleInput, organizationInput, phoneInput, emailInput, websiteInput, profilePicUrlInput, facebookUrlInput, linkedinUrlInput, instagramUrlInput];
+    // All inputs that should trigger updatePreview when changed
+    const allInputs = [nameInput, titleInput, organizationInput, phoneInput, emailInput, websiteInput, profilePicUrlInput, facebookUrlInput, linkedinUrlInput, instagramUrlInput];
 
-        function generateSignatureHtml() {
-            // Get values from input fields
-            const name = nameInput.value.trim().replace(/\s/g, '&nbsp;'); // Replace spaces with &nbsp; like template name
-            const title = titleInput.value.trim().replace(/\s/g, '&nbsp;').replace(/'/g, '&#39;'); // Apply encoding like name/org
-            const organization = organizationInput.value.trim().replace(/'/g, '&#39;'); // Match template encoding for apostrophe
-            const phone = phoneInput.value.trim();
-            const email = emailInput.value.trim();
-            const website = websiteInput.value.trim(); // Expecting full URL with https://
-            const profilePicUrl = profilePicUrlInput.value.trim();
-            const facebookUrl = facebookUrlInput.value.trim();
-            const linkedinUrl = linkedinUrlInput.value.trim();
-            const instagramUrl = instagramUrlInput.value.trim();
-
-            // --- START Exact HTML construction based on PROVIDED EMAIL SOURCE ---
-
-            // Profile Picture Part - Use input URL, match template structure
-            let profilePicHtml = '';
-            if (profilePicUrl) {
-                profilePicHtml = `
-                        <td width="150" style="vertical-align:middle">
-                            <span style="margin-right:20px;display:block">
-                                <img src="${profilePicUrl}" alt="" width="130" style="max-width:130px">
-                            </span>
-                        </td>`;
-            } else {
-                profilePicHtml = `<td width="150" style="vertical-align:middle">&nbsp;</td>`; // Keep cell for structure
-            }
-
-            // Contact Info Part - Match template structure and styles exactly
-            const phoneHtml = phone ? `
-                    <tr style="vertical-align:middle">
-                        <td width="30" style="vertical-align:middle">
-                            <table border="0" cellspacing="0" cellpadding="0" style="vertical-align:-webkit-baseline-middle"><tbody><tr><td style="vertical-align:bottom">
-                                <span style="display:inline-block;background-color:${purpleColor}">
-                                    <img src="${hubspotIconBase}phone-icon-2x.png" alt="mobilePhone" width="13" style="display:block">
-                                </span>
-                            </td></tr></tbody></table>
-                        </td>
-                        <td style="padding:0px;color:${defaultTextColor}">
-                            <a style="color:${defaultTextColor};font-size:12px">${phone}</a>
-                        </td>
-                    </tr>` : '';
-
-            const emailHtml = email ? `
-                    <tr style="vertical-align:middle">
-                        <td width="30" style="vertical-align:middle">
-                            <table border="0" cellspacing="0" cellpadding="0" style="vertical-align:-webkit-baseline-middle"><tbody><tr><td style="vertical-align:bottom">
-                                <span style="display:inline-block;background-color:${purpleColor}">
-                                    <img src="${hubspotIconBase}email-icon-2x.png" alt="emailAddress" width="13" style="display:block">
-                                </span>
-                            </td></tr></tbody></table>
-                        </td>
-                        <td style="padding:0px">
-                            <a href="mailto:${email}" style="color:${defaultTextColor};font-size:12px" target="_blank">${email}</a>
-                        </td>
-                    </tr>` : '';
-
-            const websiteHtml = website ? `
-                    <tr style="vertical-align:middle">
-                        <td width="30" style="vertical-align:middle">
-                            <table border="0" cellspacing="0" cellpadding="0" style="vertical-align:-webkit-baseline-middle"><tbody><tr><td style="vertical-align:bottom">
-                                <span style="display:inline-block;background-color:${purpleColor}">
-                                    <img src="${hubspotIconBase}link-icon-2x.png" alt="website" width="13" style="display:block">
-                                </span>
-                            </td></tr></tbody></table>
-                        </td>
-                        <td style="padding:0px">
-                            <a href="${website}" style="color:${defaultTextColor};font-size:12px" target="_blank">${website}</a>
-                        </td>
-                    </tr>` : '';
-
-            // Social Media Icons Part - Match template structure and styles exactly
-            let socialIconsInnerHtml = '';
-            const socialLinks = [
-                { url: facebookUrl, icon: 'facebook-icon-2x.png', alt: 'facebook' },
-                { url: linkedinUrl, icon: 'linkedin-icon-2x.png', alt: 'linkedin' },
-                { url: instagramUrl, icon: 'instagram-icon-2x.png', alt: 'instagram' },
-            ];
-
-            socialLinks.forEach((link, index) => {
-                if (link.url) {
-                    socialIconsInnerHtml += `
-                        <td>
-                            <a href="${link.url}" style="display:inline-block;padding:0px;background-color:${blackColor}" target="_blank">
-                                <img src="${hubspotIconBase}${link.icon}" alt="${link.alt}" width="24" style="max-width:135px;display:block">
-                            </a>
-                        </td>`;
-                    const hasNextLink = socialLinks.slice(index + 1).some(l => l.url);
-                    if (hasNextLink) {
-                        socialIconsInnerHtml += `<td width="5">&nbsp;</td>`;
-                    }
-                }
-            });
-            // Final spacer according to template structure if any icons exist
-            if (socialIconsInnerHtml) {
-                 socialIconsInnerHtml += `<td width="5">&nbsp;</td>`;
-            }
-
-            const socialIconsTableHtml = socialIconsInnerHtml ? `
-                            <table border="0" cellspacing="0" cellpadding="0" style="display:inline-block;vertical-align:-webkit-baseline-middle">
-                                <tbody>
-                                    <tr>${socialIconsInnerHtml}</tr>
-                                </tbody>
-                            </table>` : '';
-
-            // Assemble the final signature HTML exactly like the email source template
-            // Note: Removed the outer wrapping <div> added in previous step as it wasn't in the email source's signature block itself.
-            const signatureHtml = `
-<div dir="ltr" class="gmail_signature" data-smartmail="gmail_signature">
-    <div dir="ltr">
-        <table border="0" cellspacing="0" cellpadding="0" style="vertical-align:-webkit-baseline-middle;font-family:Tahoma">
-            <tbody>
-                <tr>
-                    <td>
-                        <table border="0" cellspacing="0" cellpadding="0" style="vertical-align:-webkit-baseline-middle">
-                            <tbody>
-                                <tr>
-                                    ${profilePicHtml}
-                                    <td style="vertical-align:middle">
-                                        <h2 style="margin:0px;font-size:16px;color:${blackColor}">${name}</h2>
-                                        <p style="margin:0px;color:${defaultTextColor};font-size:12px;line-height:20px">${title}</p>
-                                        <p style="margin:0px;color:${defaultTextColor};font-size:12px;line-height:20px">${organization}</p>
-                                    </td>
-                                    <td width="10">&nbsp;</td>
-                                    <td width="1" height="auto" style="width:1px;border-bottom:none;border-left:1px solid ${purpleColor}">&nbsp;</td>
-                                    <td width="10">&nbsp;</td>
-                                    <td style="vertical-align:middle">
-                                        <table border="0" cellspacing="0" cellpadding="0" style="vertical-align:-webkit-baseline-middle">
-                                            <tbody>
-                                                ${phoneHtml}
-                                                ${emailHtml}
-                                                ${websiteHtml}
-                                            </tbody>
-                                        </table>
-                                    </td>
-                                </tr>
-                            </tbody>
-                        </table>
-                    </td>
-                </tr>
-                <tr>
-                    <td>
-                        <table border="0" cellspacing="0" cellpadding="0" style="width:573.016px;vertical-align:-webkit-baseline-middle">
-                            <tbody>
-                                <tr><td height="10">&nbsp;</td></tr>
-                                <tr><td width="auto" height="1" style="width:573.016px;border-bottom:1px solid ${purpleColor};border-left:none;display:block">&nbsp;</td></tr>
-                                <tr><td height="10">&nbsp;</td></tr>
-                            </tbody>
-                        </table>
-                    </td>
-                </tr>
-                <tr>
-                    <td>
-                        <table border="0" cellspacing="0" cellpadding="0" style="width:573.016px;vertical-align:-webkit-baseline-middle">
-                            <tbody>
-                                <tr>
-                                    <td style="vertical-align:top">
-                                        <img src="${logoUrl}" alt="" width="130" style="display:inline-block;max-width:130px">
-                                    </td>
-                                    <td style="text-align:right;vertical-align:top">
-                                        ${socialIconsTableHtml}
-                                    </td>
-                                </tr>
-                            </tbody>
-                        </table>
-                    </td>
-                </tr>
-                <tr></tr>
-            </tbody>
-        </table>
-    </div>
-</div>`;
-            // --- END Exact HTML construction ---
-
-            return signatureHtml;
-        }
-
-
-        function updatePreview() {
-            const generatedHtml = generateSignatureHtml();
-
-            // Directly use the generated HTML for the visual preview
-            // No need to add preview classes or remove styles anymore
-            previewContainer.innerHTML = generatedHtml;
-
-            // Update the hidden textarea with the raw, unstyled HTML for copying
-            htmlOutput.value = generatedHtml;
-        }
-
-        // Function to update the preview based *only* on the textarea content
-        function updatePreviewFromTextArea() {
-            const currentHtml = htmlOutput.value;
-            // Directly use the HTML from the textarea for the preview,
-            // assuming it contains all necessary inline styles.
-            previewContainer.innerHTML = currentHtml;
-        }
-
-        // Add event listeners to update preview on input change
-        allInputs.forEach(input => {
-            input.addEventListener('input', updatePreview); // Update preview AND textarea
+    // Get the DVD Easter Egg component and update the selected image URL when it changes
+    const updateDvdEasterEggSelectedImage = () => {
+        // This custom event will be picked up by the React component
+        const event = new CustomEvent('profilePicUrlChanged', { 
+            detail: { url: profilePicUrlInput.value }
         });
+        document.dispatchEvent(event);
+    };
 
-        // Add event listener for the HTML textarea
-        htmlOutput.addEventListener('input', updatePreviewFromTextArea); // Update only preview
+    // Listen for changes to the profile pic URL
+    profilePicUrlInput.addEventListener('input', updateDvdEasterEggSelectedImage);
 
-        // Toggle HTML output visibility
-         showHtmlButton.addEventListener('click', () => {
-             htmlOutput.style.display = htmlOutput.style.display === 'none' ? 'block' : 'none';
-         });
+    function generateSignatureHtml() {
+        // Get values from input fields
+        const name = nameInput.value.trim().replace(/\s/g, '&nbsp;'); // Replace spaces with &nbsp; like template name
+        const title = titleInput.value.trim().replace(/\s/g, '&nbsp;').replace(/'/g, '&#39;'); // Apply encoding like name/org
+        const organization = organizationInput.value.trim().replace(/'/g, '&#39;'); // Match template encoding for apostrophe
+        const phone = phoneInput.value.trim();
+        const email = emailInput.value.trim();
+        const website = websiteInput.value.trim(); // Expecting full URL with https://
+        const profilePicUrl = profilePicUrlInput.value.trim();
+        const facebookUrl = facebookUrlInput.value.trim();
+        const linkedinUrl = linkedinUrlInput.value.trim();
+        const instagramUrl = instagramUrlInput.value.trim();
 
+        // --- START Exact HTML construction based on PROVIDED EMAIL SOURCE ---
 
-        // Initial preview generation on load
-        updatePreview();
-    // }); // End of DOMContentLoaded listener (not needed in Astro)
+        // Profile Picture Part - Use input URL, match template structure
+        let profilePicHtml = '';
+        if (profilePicUrl) {
+            profilePicHtml = `
+                    <td width="150" style="vertical-align:middle">
+                        <span style="margin-right:20px;display:block">
+                            <img src="${profilePicUrl}" alt="" width="130" style="max-width:130px">
+                        </span>
+                    </td>`;
+        } else {
+            profilePicHtml = `<td width="150" style="vertical-align:middle">&nbsp;</td>`; // Keep cell for structure
+        }
+
+        // Contact Info Part - Match template structure and styles exactly
+        const phoneHtml = phone ? `
+                <tr style="vertical-align:middle">
+                    <td width="30" style="vertical-align:middle">
+                        <table border="0" cellspacing="0" cellpadding="0" style="vertical-align:-webkit-baseline-middle"><tbody><tr><td style="vertical-align:bottom">
+                            <span style="display:inline-block;background-color:${purpleColor}">
+                                <img src="${hubspotIconBase}phone-icon-2x.png" alt="mobilePhone" width="13" style="display:block">
+                            </span>
+                        </td></tr></tbody></table>
+                    </td>
+                    <td style="padding:0px;color:${defaultTextColor}">
+                        <a style="color:${defaultTextColor};font-size:12px">${phone}</a>
+                    </td>
+                </tr>` : '';
+
+        const emailHtml = email ? `
+                <tr style="vertical-align:middle">
+                    <td width="30" style="vertical-align:middle">
+                        <table border="0" cellspacing="0" cellpadding="0" style="vertical-align:-webkit-baseline-middle"><tbody><tr><td style="vertical-align:bottom">
+                            <span style="display:inline-block;background-color:${purpleColor}">
+                                <img src="${hubspotIconBase}email-icon-2x.png" alt="emailAddress" width="13" style="display:block">
+                            </span>
+                        </td></tr></tbody></table>
+                    </td>
+                    <td style="padding:0px">
+                        <a href="mailto:${email}" style="color:${defaultTextColor};font-size:12px" target="_blank">${email}</a>
+                    </td>
+                </tr>` : '';
+
+        const websiteHtml = website ? `
+                <tr style="vertical-align:middle">
+                    <td width="30" style="vertical-align:middle">
+                        <table border="0" cellspacing="0" cellpadding="0" style="vertical-align:-webkit-baseline-middle"><tbody><tr><td style="vertical-align:bottom">
+                            <span style="display:inline-block;background-color:${purpleColor}">
+                                <img src="${hubspotIconBase}link-icon-2x.png" alt="website" width="13" style="display:block">
+                            </span>
+                        </td></tr></tbody></table>
+                    </td>
+                    <td style="padding:0px">
+                        <a href="${website}" style="color:${defaultTextColor};font-size:12px" target="_blank">${website}</a>
+                    </td>
+                </tr>` : '';
+
+        // Social Media Icons Part - Match template structure and styles exactly
+        let socialIconsInnerHtml = '';
+        const socialLinks = [
+            { url: facebookUrl, icon: 'facebook-icon-2x.png', alt: 'facebook' },
+            { url: linkedinUrl, icon: 'linkedin-icon-2x.png', alt: 'linkedin' },
+            { url: instagramUrl, icon: 'instagram-icon-2x.png', alt: 'instagram' },
+        ];
+
+        socialLinks.forEach((link, index) => {
+            if (link.url) {
+                socialIconsInnerHtml += `
+                    <td>
+                        <a href="${link.url}" style="display:inline-block;padding:0px;background-color:${blackColor}" target="_blank">
+                            <img src="${hubspotIconBase}${link.icon}" alt="${link.alt}" width="24" style="max-width:135px;display:block">
+                        </a>
+                    </td>`;
+                const hasNextLink = socialLinks.slice(index + 1).some(l => l.url);
+                if (hasNextLink) {
+                    socialIconsInnerHtml += `<td width="5">&nbsp;</td>`;
+                }
+            }
+        });
+        // Final spacer according to template structure if any icons exist
+        if (socialIconsInnerHtml) {
+             socialIconsInnerHtml += `<td width="5">&nbsp;</td>`;
+        }
+
+        const socialIconsTableHtml = socialIconsInnerHtml ? `
+                        <table border="0" cellspacing="0" cellpadding="0" style="display:inline-block;vertical-align:-webkit-baseline-middle">
+                            <tbody>
+                                <tr>${socialIconsInnerHtml}</tr>
+                            </tbody>
+                        </table>` : '';
+
+        // Assemble the final signature HTML exactly like the email source template
+        const signatureHtml = `
+<div dir="ltr" class="gmail_signature" data-smartmail="gmail_signature">
+<div dir="ltr">
+    <table border="0" cellspacing="0" cellpadding="0" style="vertical-align:-webkit-baseline-middle;font-family:Tahoma">
+        <tbody>
+            <tr>
+                <td>
+                    <table border="0" cellspacing="0" cellpadding="0" style="vertical-align:-webkit-baseline-middle">
+                        <tbody>
+                            <tr>
+                                ${profilePicHtml}
+                                <td style="vertical-align:middle">
+                                    <h2 style="margin:0px;font-size:16px;color:${blackColor}">${name}</h2>
+                                    <p style="margin:0px;color:${defaultTextColor};font-size:12px;line-height:20px">${title}</p>
+                                    <p style="margin:0px;color:${defaultTextColor};font-size:12px;line-height:20px">${organization}</p>
+                                </td>
+                                <td width="10">&nbsp;</td>
+                                <td width="1" height="auto" style="width:1px;border-bottom:none;border-left:1px solid ${purpleColor}">&nbsp;</td>
+                                <td width="10">&nbsp;</td>
+                                <td style="vertical-align:middle">
+                                    <table border="0" cellspacing="0" cellpadding="0" style="vertical-align:-webkit-baseline-middle">
+                                        <tbody>
+                                            ${phoneHtml}
+                                            ${emailHtml}
+                                            ${websiteHtml}
+                                        </tbody>
+                                    </table>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <table border="0" cellspacing="0" cellpadding="0" style="width:573.016px;vertical-align:-webkit-baseline-middle">
+                        <tbody>
+                            <tr><td height="10">&nbsp;</td></tr>
+                            <tr><td width="auto" height="1" style="width:573.016px;border-bottom:1px solid ${purpleColor};border-left:none;display:block">&nbsp;</td></tr>
+                            <tr><td height="10">&nbsp;</td></tr>
+                        </tbody>
+                    </table>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <table border="0" cellspacing="0" cellpadding="0" style="width:573.016px;vertical-align:-webkit-baseline-middle">
+                        <tbody>
+                            <tr>
+                                <td style="vertical-align:top">
+                                    <img src="${logoUrl}" alt="" width="130" style="display:inline-block;max-width:130px">
+                                </td>
+                                <td style="text-align:right;vertical-align:top">
+                                    ${socialIconsTableHtml}
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </td>
+            </tr>
+            <tr></tr>
+        </tbody>
+    </table>
+</div>
+</div>`;
+
+        return signatureHtml;
+    }
+
+    function updatePreview() {
+        const generatedHtml = generateSignatureHtml();
+
+        // Directly use the generated HTML for the visual preview
+        // No need to add preview classes or remove styles anymore
+        previewContainer.innerHTML = generatedHtml;
+
+        // Update the hidden textarea with the raw, unstyled HTML for copying
+        htmlOutput.value = generatedHtml;
+        
+        // Update DVD Easter Egg with the current profile pic
+        updateDvdEasterEggSelectedImage();
+    }
+
+    // Function to update the preview based *only* on the textarea content
+    function updatePreviewFromTextArea() {
+        const currentHtml = htmlOutput.value;
+        // Directly use the HTML from the textarea for the preview,
+        // assuming it contains all necessary inline styles.
+        previewContainer.innerHTML = currentHtml;
+    }
+
+    // Add event listeners to update preview on input change
+    allInputs.forEach(input => {
+        input.addEventListener('input', updatePreview); // Update preview AND textarea
+    });
+
+    // Add event listener for the HTML textarea
+    htmlOutput.addEventListener('input', updatePreviewFromTextArea); // Update only preview
+
+    // Toggle HTML output visibility
+     showHtmlButton.addEventListener('click', () => {
+         htmlOutput.style.display = htmlOutput.style.display === 'none' ? 'block' : 'none';
+     });
+
+    // Initial preview generation on load
+    updatePreview();
 </script>
