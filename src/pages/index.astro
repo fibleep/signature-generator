@@ -4,11 +4,11 @@ import ProfilePicSelector from '../components/ProfilePicSelector';
 import DvdEasterEgg from '../components/DvdEasterEgg';
 
 // Define the purple color from the template
-const purpleColor = 'rgb(127, 51, 199)';
+const purpleColor = '#1237EA';
 const blackColor = 'rgb(0, 0, 0)';
 const defaultTextColor = 'rgb(0, 0, 0)'; // As seen in template links/text
 const hubspotIconBase = 'https://cdn2.hubspot.net/hubfs/53/tools/email-signature-generator/icons/';
-const logoUrl = 'https://uploads-ssl.webflow.com/638782a43f80a9862648eed7/662e1b995c5cc0dae5c5815d_logo_test_2.webp'; // From template
+const logoUrl = '/tectonic.png'; // From template
 
 // People data for the profile selector
 const people = [
@@ -31,9 +31,9 @@ const people = [
 ];
 ---
 
-<Layout title="Slush'D Signature Generator">
+<Layout title="Tectonic Signature Generator">
     <div class="container">
-        <h1>Slush'D Signature Generator</h1>
+        <h1>Tectonic Signature Generator</h1>
         <div class="form-section">
             <h2>Enter Your Details</h2>
 			
@@ -45,16 +45,16 @@ const people = [
                 <input type="text" id="title" value="IT Lead" />
 
                 <label for="organization">Organization:</label>
-                <input type="text" id="organization" value="Ghent Slush'D - NextGen Belgium" />
+                <input type="text" id="organization" value="Tectonic" />
 
                 <label for="phone">Mobile Phone:</label>
                 <input type="text" id="phone" value="+32 472 71 71 72" />
 
                 <label for="email">Email Address:</label>
-                <input type="email" id="email" value="filip@slushdbelgium.be" />
+                <input type="email" id="email" value="filip@tectonicconf.eu" />
 
                 <label for="website">Website URL:</label>
-                <input type="text" id="website" value="https://www.ghentslushd.be" placeholder="Include https://" />
+                <input type="text" id="website" value="https://www.tectonicconf.eu" placeholder="Include https://" />
 
                 <label for="profilePicUrl">Profile Picture:</label>
                 <div>
@@ -322,7 +322,9 @@ h1, h2 {
                         <tbody>
                             <tr>
                                 <td style="vertical-align:top">
-                                    <img src="${logoUrl}" alt="" width="130" style="display:inline-block;max-width:130px">
+                                    <span style="display:inline-block;background-color:#333;padding:10px;border-radius:8px">
+                                        <img src="${logoUrl}" alt="" width="130" style="display:block;max-width:130px">
+                                    </span>
                                 </td>
                                 <td style="text-align:right;vertical-align:top">
                                     ${socialIconsTableHtml}
