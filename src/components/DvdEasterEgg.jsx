@@ -70,7 +70,7 @@ export default function DvdEasterEgg({ people, selectedImageUrl }) {
 					e.currentTarget.style.transform = "scale(1)";
 				}}>
 				<img
-					src='/dvd.png'
+					src={import.meta.env.BASE_URL + "dvd.png"}
 					alt='DVD Logo'
 					style={{
 						width: "100%",
